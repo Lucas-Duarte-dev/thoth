@@ -1,4 +1,4 @@
-import { KafkaHandler } from '../../../../core/infra/KafkaHandler';
+import { KafkaHandler } from '@core/infra/KafkaHandler';
 import { producer } from '../producer';
 
 export class KafkaMessagingHandler implements KafkaHandler {

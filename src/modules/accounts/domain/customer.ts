@@ -1,10 +1,11 @@
 import { Entity } from '../../../core/domain/Entity';
 import { Either, right } from '../../../core/logic/Either';
 import { InvalidateCustomerArguments } from './errors/InvalidateCustomerArguments';
+import { Email } from './validators/email';
 
 interface CustomerPropsInterface {
     name: string
-    email: string
+    email: Email
 }
 
 export class Customer extends Entity<CustomerPropsInterface> {
@@ -16,7 +17,7 @@ export class Customer extends Entity<CustomerPropsInterface> {
         return this.props.name;
     }
 
-    get email(): string {
+    get email(): Email {
         return this.props.email;
     }
 

@@ -1,20 +1,24 @@
-import { Request, Response } from "express";
 import { RegisterCustomer } from './RegisterCustomer';
+import { Controller } from "@core/infra/Controller";
+import { clientError, HTTPResponse , created} from '@core/infra/HTTPResponse';
 
-export class RegisterCustomerController {
+type RegisterCustomerRequestType = {
+    name: string,
+    email: string
+}
+
+export class RegisterCustomerController  implements Controller {
     constructor(
         private readonly registercustomer: RegisterCustomer
     ) {}
 
-    async handle(request: Request, response: Response) {
-        const {name, email} = request.body;
-
+    async handle({name, email}: RegisterCustomerRequestType): Promise<HTTPResponse> {
         const registerCustomer = await this.registercustomer.execute({name, email});
 
         if (registerCustomer.isLeft()) {
-            return response.status(404).json({message: registerCustomer.value.message});
+            return clientError(registerCustomer.value);
         }
 
-        return response.status(200).json({customer: registerCustomer.value});
+        return created();
     }
 }

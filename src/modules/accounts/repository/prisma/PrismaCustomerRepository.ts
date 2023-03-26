@@ -1,11 +1,13 @@
-import { prisma } from '../../../../infra/databse/prisma/prisma';
+import { prisma } from '@infra/databse/prisma/prisma';
 import { Customer } from '../../domain/customer';
 import { CustomerMapper } from '../../mappers/CustomerMapper';
 import { CustomerRepositoryInterface } from '../CustomerRepositoryInterface';
 
 export class PrismaCustomerRepository implements CustomerRepositoryInterface {
     async exists(email: string): Promise<boolean> {
-        return !Boolean(this.findByEmail(email));
+        return !!await prisma.customer.findUnique({
+            where: { email },
+          });
     }
 
     async findByEmail(email: string): Promise<Customer> {

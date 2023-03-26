@@ -1,11 +1,18 @@
 import { Customer as PercistenceCustomer } from '@prisma/client'
 import { Customer } from '../domain/customer';
+import { Email } from '@modules/accounts/domain/validators/email';
 
 export class CustomerMapper {
     static toDomain(raw: PercistenceCustomer): Customer {
+        const email = Email.create(raw.email);
+
+        if (email.isLeft()) {
+            return null;
+        }
+
         const customer = Customer.create({
             name: raw.name,
-            email: raw.email
+            email: email.value
         }, raw.id);
 
         if (customer.isLeft()) {
@@ -19,7 +26,7 @@ export class CustomerMapper {
         return {
             id: customer.id,
             name: customer.name,
-            email: customer.email
+            email: customer.email.value
         }
     }
 }

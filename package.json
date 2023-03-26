@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/infra/http/index.js",
-    "start:dev": "ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/http/",
+    "start:dev": "ts-node-dev -r tsconfig-paths/register --inspect --respawn --transpile-only --ignore-watch node_modules src/infra/http/",
     "build": "tsc"
   },
   "dependencies": {

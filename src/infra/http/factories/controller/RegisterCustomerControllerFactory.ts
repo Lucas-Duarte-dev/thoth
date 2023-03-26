@@ -1,6 +1,6 @@
-import { PrismaCustomerRepository } from '../../../../modules/accounts/repository/prisma/PrismaCustomerRepository';
-import { RegisterCustomerController } from '../../../../modules/accounts/useCases/RegisterCustomer/RegisterCustomerController';
-import { RegisterCustomer } from '../../../../modules/accounts/useCases/RegisterCustomer/RegisterCustomer';
+import { PrismaCustomerRepository } from '@modules/accounts/repository/prisma/PrismaCustomerRepository';
+import { RegisterCustomerController } from '@modules/accounts/useCases/RegisterCustomer/RegisterCustomerController';
+import { RegisterCustomer } from '@modules/accounts/useCases/RegisterCustomer/RegisterCustomer';
 import { KafkaMessagingHandler } from '../../../messaging/kafka/handler/KafkaMessagingHandler';
 
 export function makeRegisterCustomerController(): RegisterCustomerController {
