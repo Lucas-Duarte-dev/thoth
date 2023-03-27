@@ -1,5 +1,6 @@
 import { Either, left, right } from "@core/logic/Either";
 import { InvalidateCustomerArguments } from "../errors/InvalidateCustomerArguments";
+import { ZodError, z } from 'zod';
 
 export class Email {
     private readonly email: string;
@@ -12,27 +13,26 @@ export class Email {
         return this.email; 
     }
 
-    static format(email: string): string {
-        return email.trim().toLowerCase();
-    }
+    static validate(email: string): String|Boolean {
+        const emailRules = z.string().email().max(255)
+            .transform(data => data.toLocaleLowerCase());
 
-    static isValid(email: string): boolean {
-        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const parseEmail = emailRules.safeParse(email);
 
-        if (!email || !regex.test(email)) {
+        if (!parseEmail.success) {
             return false;
         }
 
-        return true;
+        return parseEmail.data;
     }
 
     static create(email: string): Either<InvalidateCustomerArguments, Email> {
-        if (!this.isValid(email)) {
+        const formatEmail = this.validate(email);
+
+        if (!formatEmail) {
             return left(new InvalidateCustomerArguments(email))
         }
 
-        const formatEmail = this.format(email);
-
-        return right( new Email(formatEmail));
+        return right( new Email(String(formatEmail)));
     }
 }
