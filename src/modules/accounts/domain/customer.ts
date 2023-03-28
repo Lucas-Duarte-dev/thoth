@@ -1,11 +1,14 @@
 import { Entity } from '../../../core/domain/Entity';
 import { Either, right } from '../../../core/logic/Either';
 import { InvalidateCustomerArguments } from './errors/InvalidateCustomerArguments';
-import { Email } from './validators/email';
+import { Email } from './props/email';
+import { Password } from './props/password';
 
 interface CustomerPropsInterface {
     name: string
-    email: Email
+    email: Email,
+    password: Password,
+    remember_me: boolean
 }
 
 export class Customer extends Entity<CustomerPropsInterface> {
@@ -19,6 +22,14 @@ export class Customer extends Entity<CustomerPropsInterface> {
 
     get email(): Email {
         return this.props.email;
+    }
+
+    get password(): Password {
+        return this.props.password
+    }
+
+    get rememberMe(): boolean {
+        return this.props.remember_me;
     }
 
     static create(props: CustomerPropsInterface, id?: string): Either<InvalidateCustomerArguments, Customer> {

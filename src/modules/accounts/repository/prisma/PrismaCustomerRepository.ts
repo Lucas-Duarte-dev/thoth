@@ -4,6 +4,14 @@ import { CustomerMapper } from '../../mappers/CustomerMapper';
 import { CustomerRepositoryInterface } from '../CustomerRepositoryInterface';
 
 export class PrismaCustomerRepository implements CustomerRepositoryInterface {
+    async rememberCustomerList(): Promise<Customer[]> {
+        const persistentCustomerList = await prisma.customer.findMany({
+            where: {remember_me: true}
+        });
+
+        return persistentCustomerList.map(customer => CustomerMapper.toDomain(customer));
+    }
+
     async exists(email: string): Promise<boolean> {
         return !!await prisma.customer.findUnique({
             where: { email },

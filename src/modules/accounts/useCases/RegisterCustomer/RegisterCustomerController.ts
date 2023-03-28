@@ -4,7 +4,9 @@ import { clientError, HTTPResponse , created} from '@core/infra/HTTPResponse';
 
 type RegisterCustomerRequestType = {
     name: string,
-    email: string
+    email: string,
+    password: string,
+    remember_me?: boolean
 }
 
 export class RegisterCustomerController  implements Controller {
@@ -12,8 +14,13 @@ export class RegisterCustomerController  implements Controller {
         private readonly registercustomer: RegisterCustomer
     ) {}
 
-    async handle({name, email}: RegisterCustomerRequestType): Promise<HTTPResponse> {
-        const registerCustomer = await this.registercustomer.execute({name, email});
+    async handle({name, email, password, remember_me}: RegisterCustomerRequestType): Promise<HTTPResponse> {
+        const registerCustomer = await this.registercustomer.execute({
+            name,
+            email,
+            password,
+            remember_me
+        });
 
         if (registerCustomer.isLeft()) {
             return clientError(registerCustomer.value);

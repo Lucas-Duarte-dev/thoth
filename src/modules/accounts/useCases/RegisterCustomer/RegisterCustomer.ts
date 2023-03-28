@@ -4,11 +4,14 @@ import { InvalidateCustomerArguments } from '../../domain/errors/InvalidateCusto
 import { Customer } from '../../domain/customer';
 import { AccountAlreadyExists } from '../../domain/errors/AccountAlreadyExists ';
 import { KafkaHandler } from "../../../../core/infra/KafkaHandler";
-import { Email } from "@modules/accounts/domain/validators/email";
+import { Email } from "@modules/accounts/domain/props/email";
+import { Password } from '../../domain/props/password';
 
 type RegisterCustomerRequestInterface = {
     name: string;
     email: string;
+    password: string;
+    remember_me?: boolean;
 };
 
 type RegisterCustomerResponseInterface = Either<
@@ -22,16 +25,23 @@ export class RegisterCustomer {
         private readonly kafkaHandler: KafkaHandler
     ) {}
 
-    async execute({name, email}: RegisterCustomerRequestInterface): Promise<RegisterCustomerResponseInterface> {
+    async execute({name, email, password, remember_me}: RegisterCustomerRequestInterface): Promise<RegisterCustomerResponseInterface> {
         const emailOrError = Email.create(email);
+        const passwordOrError = Password.create(password)
 
         if (emailOrError.isLeft()) {
             return left(emailOrError.value);
         }
         
+        if (passwordOrError.isLeft()) {
+            return left(passwordOrError.value);
+        }
+
         const customerOrError = Customer.create({
             name,
-            email: emailOrError.value
+            email: emailOrError.value,
+            password: passwordOrError.value,
+            remember_me
         });
 
         if (customerOrError.isLeft()) {

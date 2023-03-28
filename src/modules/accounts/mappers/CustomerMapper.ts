@@ -1,18 +1,26 @@
 import { Customer as PercistenceCustomer } from '@prisma/client'
 import { Customer } from '../domain/customer';
-import { Email } from '@modules/accounts/domain/validators/email';
+import { Email } from '@modules/accounts/domain/props/email';
+import { Password } from '../domain/props/password';
 
 export class CustomerMapper {
     static toDomain(raw: PercistenceCustomer): Customer {
         const email = Email.create(raw.email);
+        const password = Password.create(raw.password);
 
         if (email.isLeft()) {
             return null;
         }
 
+        if (password.isLeft()) {
+            return null;
+        }
+
         const customer = Customer.create({
             name: raw.name,
-            email: email.value
+            email: email.value,
+            password: password.value,
+            remember_me: raw.remember_me
         }, raw.id);
 
         if (customer.isLeft()) {
@@ -26,7 +34,9 @@ export class CustomerMapper {
         return {
             id: customer.id,
             name: customer.name,
-            email: customer.email.value
+            email: customer.email.value,
+            password: await customer.password.getHashedValue(),
+            remember_me: customer.rememberMe
         }
     }
 }

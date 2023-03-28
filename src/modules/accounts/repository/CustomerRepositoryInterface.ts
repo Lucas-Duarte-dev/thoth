@@ -5,4 +5,5 @@ export interface CustomerRepositoryInterface {
     findByEmail(email: string): Promise<Customer>;
     save(customer: Customer): Promise<void>;
     create(customer: Customer): Promise<void>;
+    rememberCustomerList(): Promise<Customer[]>;
 }

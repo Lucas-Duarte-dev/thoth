@@ -9,7 +9,24 @@ datasource db {
 }
 
 model Customer {
-  id    String @id
-  name  String
-  email String @unique
+  id                     String                   @id
+  name                   String
+  email                  String                   @unique
+  password               String
+  remember_me            Boolean                  @default(false)
+  created_at             DateTime                 @default(now())
+  CustomerAuthExpiration CustomerAuthExpiration[]
+
+  @@map("customer")
+}
+
+model CustomerAuthExpiration {
+  id          String   @id
+  token       String
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String
+  created_at  DateTime @default(now())
+
+  @@unique([customer_id])
+  @@map("customer_auth_exp")
 }

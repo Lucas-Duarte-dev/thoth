@@ -1,6 +1,7 @@
 import express from 'express';
 import { router } from './routes';
 import cors from 'cors';
+import'@infra/crons';
 
 const app = express();
 
