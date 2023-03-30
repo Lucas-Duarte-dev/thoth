@@ -1,10 +1,8 @@
-import { Router } from 'express';
-import { customerRouter } from './customer.routes';
-import { testRouter } from './test.routes';
+import { Router } from 'express'
+import { customerRouter } from './customer.routes'
 
-const router = Router();
+const router = Router()
 
-router.use(customerRouter);
-router.use(testRouter);
+router.use(customerRouter)
 
-export { router };
+export { router }

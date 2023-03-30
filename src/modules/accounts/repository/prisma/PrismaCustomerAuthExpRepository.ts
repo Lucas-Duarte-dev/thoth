@@ -3,18 +3,14 @@ import { CustomerAuthExpirationRepositoryInterface } from '../CustomerAuthExpira
 import { prisma } from '@infra/databse/prisma/prisma'
 import { CustomerAuthenticateMapper } from '../../mappers/CustomerAuthenticateMapper'
 
-export class PrismaCustomerAuthExpRepository
-    implements CustomerAuthExpirationRepositoryInterface
-{
+export class PrismaCustomerAuthExpRepository implements CustomerAuthExpirationRepositoryInterface {
     async exists(customerId: string): Promise<boolean> {
         return !!(await prisma.customerAuthExpiration.findUnique({
             where: { customer_id: customerId },
         }))
     }
 
-    async findByCustomerId(
-        customerId: string
-    ): Promise<CustomerAuthExpiration> {
+    async findByCustomerId(customerId: string): Promise<CustomerAuthExpiration> {
         const customerAuthExp = await prisma.customerAuthExpiration.findUnique({
             where: { customer_id: customerId },
         })
