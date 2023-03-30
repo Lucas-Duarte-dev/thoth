@@ -1,13 +1,13 @@
 import { ApolloServer } from 'apollo-server-express'
-import { AppointmentsResolver } from '../appointments'
+import { Resolvers } from '../resolvers'
 import { Express } from 'express'
 import path from 'node:path'
 import { buildSchema } from 'type-graphql'
 
-const bootstrap = async () => {
+const bootstrap = async (app: Express) => {
   const schema = await buildSchema({
-    resolvers: [AppointmentsResolver],
-    emitSchemaFile: path.resolve(__dirname, '../appointments/schema.gql'),
+    resolvers: [Resolvers],
+    emitSchemaFile: path.resolve(__dirname, '../resolvers/schema.gql'),
   })
 
   const server = new ApolloServer({
@@ -16,7 +16,9 @@ const bootstrap = async () => {
 
   await server.start()
 
-  return server
+  console.log(`Server GraphQL running on path ${server.graphqlPath}`)
+
+  server.applyMiddleware({ app })
 }
 
 export { bootstrap }

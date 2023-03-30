@@ -10,6 +10,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(router)
-bootstrap().then(data => data.applyMiddleware({ app }))
+bootstrap(app)
 
 export { app }
