@@ -16,6 +16,7 @@ model Customer {
   remember_me            Boolean                  @default(false)
   created_at             DateTime                 @default(now())
   CustomerAuthExpiration CustomerAuthExpiration[]
+  Post                   Post[]
 
   @@map("customer")
 }
@@ -29,4 +30,14 @@ model CustomerAuthExpiration {
 
   @@unique([customer_id])
   @@map("customer_auth_exp")
+}
+
+model Post {
+    id String @id
+    title String
+    description String
+    body String
+    customer Customer @relation(fields: [customer_id], references: [id])
+    customer_id String
+    created_at DateTime @default(now())
 }

@@ -30,3 +30,17 @@ export function unauthorized(error: Error): HTTPResponse {
         body: error.message
     }
 }
+
+export function forbidden(error: Error): HTTPResponse {
+    return {
+        statusCode: 403,
+        body: error.message
+    }
+}
+
+export function fail(error: Error): HTTPResponse {
+    return {
+        statusCode: 500,
+        body: error.message
+    }
+}

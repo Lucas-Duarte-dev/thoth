@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/infra/http/index.js",
     "start:dev": "tsx watch src/infra/http/index.ts",
-    "build": "tsup src"
+    "build": "tsup src",
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
@@ -32,6 +33,7 @@
     "tsup": "^6.7.0",
     "tsx": "^3.12.6",
     "typescript": "^5.0.2",
+    "vite-tsconfig-paths": "^4.0.7",
     "vitest": "^0.29.7"
   }
 }
