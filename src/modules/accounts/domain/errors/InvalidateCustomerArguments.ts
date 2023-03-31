@@ -1,8 +1,8 @@
-import { Customer } from '../customer';
+import { DomainError } from '@core/domain/errors/DomainError'
 
-export class InvalidateCustomerArguments extends Error {
-    constructor(argument: string) {
-        super(`customer arguments ${argument} is invalid.`);
-        this.name = 'InvalidateCustomerArguments';
-    }
+export class InvalidateCustomerArguments extends Error implements DomainError {
+  constructor(argument: string) {
+    super(`customer arguments ${argument} is invalid.`)
+    this.name = 'InvalidateCustomerArguments'
+  }
 }

@@ -16,7 +16,6 @@ model Customer {
   remember_me            Boolean                  @default(false)
   created_at             DateTime                 @default(now())
   CustomerAuthExpiration CustomerAuthExpiration[]
-  Post                   Post[]
 
   @@map("customer")
 }
@@ -32,12 +31,35 @@ model CustomerAuthExpiration {
   @@map("customer_auth_exp")
 }
 
-model Post {
-    id String @id
-    title String
-    description String
-    body String
-    customer Customer @relation(fields: [customer_id], references: [id])
-    customer_id String
-    created_at DateTime @default(now())
+model AdministratorCustomer {
+  id         String   @id
+  name       String
+  email      String   @unique
+  username   String   @unique
+  password   String
+  rules      Rules    @relation(fields: [rule_id], references: [id])
+  rule_id    String
+  created_at DateTime @default(now())
+
+  @@map("admin_customer")
+}
+
+model Rules {
+  id                   String                  @id
+  name                 String
+  description          String
+  AdminstratorCustomer AdministratorCustomer[]
+
+  @@map("rules")
+}
+
+model Products {
+  id            String   @id
+  title         String
+  description   String
+  total_amount  Float
+  special_price Float
+  created_at    DateTime @default(now())
+
+  @@map("products")
 }
