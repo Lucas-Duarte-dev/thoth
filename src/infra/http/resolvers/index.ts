@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { CustomerModel } from '../../../modules/accounts/dtos/models/CustomerModel'
-import { CreateCustomerInput } from '../../../modules/accounts/dtos/input/CreateCustomerInput'
+import { CustomerModel } from '@modules/accounts/dtos/models/CustomerModel'
+import { CreateCustomerInput } from '@modules/accounts/dtos/input/CreateCustomerInput'
 import { makeRegisterCustomerResolver } from '../factories/resolvers/RegisterCustomerResolverFactory'
 
 @Resolver()

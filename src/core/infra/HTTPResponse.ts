@@ -1,3 +1,5 @@
+import { DomainError } from '@core/domain/errors/DomainError'
+
 export type HTTPResponse = {
     statusCode: number,
     body: any
@@ -17,28 +19,28 @@ export function created(): HTTPResponse {
     }
 }
 
-export function clientError(error: Error): HTTPResponse {
+export function clientError(error: Error|DomainError): HTTPResponse {
     return {
         statusCode: 400,
         body: error.message
     }
 }
 
-export function unauthorized(error: Error): HTTPResponse {
+export function unauthorized(error: Error|DomainError): HTTPResponse {
     return {
         statusCode: 401,
         body: error.message
     }
 }
 
-export function forbidden(error: Error): HTTPResponse {
+export function forbidden(error: Error|DomainError): HTTPResponse {
     return {
         statusCode: 403,
         body: error.message
     }
 }
 
-export function fail(error: Error): HTTPResponse {
+export function fail(error: Error|DomainError): HTTPResponse {
     return {
         statusCode: 500,
         body: error.message

@@ -11,11 +11,11 @@ type RegisterCustomerRequestType = {
 
 export class RegisterCustomerController  implements Controller {
     constructor(
-        private readonly registercustomer: RegisterCustomer
+        private readonly registerCustomer: RegisterCustomer
     ) {}
 
     async handle({name, email, password, remember_me}: RegisterCustomerRequestType): Promise<HTTPResponse> {
-        const registerCustomer = await this.registercustomer.execute({
+        const registerCustomer = await this.registerCustomer.execute({
             name,
             email,
             password,

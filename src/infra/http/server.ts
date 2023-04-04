@@ -10,6 +10,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(router)
-bootstrap(app)
+bootstrap(app).catch(err => console.log(err.message))
 
 export { app }
