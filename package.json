@@ -8,7 +8,7 @@
     "start:dev": "tsx watch src/infra/http/index.ts",
     "build": "tsup src",
     "test": "vitest",
-    "prebuild": "node dist/infra/databse/prisma/seed.js"
+    "postbuild": "node dist/infra/databse/prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
