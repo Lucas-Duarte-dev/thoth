@@ -45,7 +45,7 @@ model AdministratorCustomer {
 
 model Rules {
   id                   String                  @id
-  name                 String
+  name                 String                  @unique
   description          String
   AdminstratorCustomer AdministratorCustomer[]
 
