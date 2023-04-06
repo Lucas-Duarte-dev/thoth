@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/cli/bash
 echo "Running startup commands"
 
 npx prisma migrate deploy

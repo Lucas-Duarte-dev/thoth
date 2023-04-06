@@ -1,11 +1,11 @@
-import { AdministratorCustomer as PercistenceAdministrator } from '@prisma/client'
+import { AdministratorCustomer as PersistenceAdministrator } from '@prisma/client'
 import { Administrator } from '../domain/administrator'
 import { Email } from '@core/domain/props/email'
 import { Username } from '@core/domain/props/username'
 import { Password } from '@core/domain/props/password'
 
 export class AdministratorMapper {
-  static toDomain(raw: PercistenceAdministrator): Administrator {
+  static toDomain(raw: PersistenceAdministrator): Administrator {
     const emailOrError = Email.create(raw.email)
     const usernameOrError = Username.create(raw.username)
     const passwordOrError = Password.create(raw.password)

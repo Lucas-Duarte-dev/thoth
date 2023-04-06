@@ -1,10 +1,10 @@
-import { Customer as PercistenceCustomer } from '@prisma/client'
+import { Customer as PersistenceCustomer } from '@prisma/client'
 import { Customer } from '../domain/customer'
 import { Email } from '@core/domain/props/email'
 import { Password } from '@core/domain/props/password'
 
 export class CustomerMapper {
-  static toDomain(raw: PercistenceCustomer): Customer {
+  static toDomain(raw: PersistenceCustomer): Customer {
     const email = Email.create(raw.email)
     const password = Password.create(raw.password)
 
