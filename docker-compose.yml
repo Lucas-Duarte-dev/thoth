@@ -43,6 +43,17 @@ services:
       - zookeeper
     networks:
       - app-net
+  redis:
+    container_name: micro_redis
+    image: 'bitnami/redis'
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - redis_data:/bitnami
+    networks:
+      - app-net
 
 networks:
   app-net:
@@ -54,4 +65,6 @@ volumes:
   kafka_data:
     driver: local
   postgresql_data:
+    driver: local
+  redis_data:
     driver: local
